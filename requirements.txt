@@ -1,0 +1,10 @@
+sqlalchemy
+pandas
+numpy
+pillow
+requests
+opencv-python
+apscheduler
+flask
+python-dotenv
+gunicorn

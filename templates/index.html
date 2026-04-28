@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fridge Manager</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600;700&family=Bebas+Neue&family=Space+Grotesk:wght@300;400;500;600;700&family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Custom Cursor -->
+  <div id="custom-cursor" class="custom-cursor"></div>
+  <div id="cursor-dot" class="cursor-dot"></div>
+  <div id="toast-container" class="toast-container"></div>
+
+  <!-- ═══ LANDING SCREEN ══════════════════════════════════════════ -->
+  <div id="landing-screen" class="landing-screen">
+    <div class="vapor-bg-wrapper">
+      <div class="vapor-grid"></div>
+      <div class="vapor-scanlines"></div>
+      <div class="vapor-noise"></div>
+    </div>
+
+    <!-- Corner brackets -->
+    <div class="corner-deco corner-tl"></div>
+    <div class="corner-deco corner-tr"></div>
+    <div class="corner-deco corner-bl"></div>
+    <div class="corner-deco corner-br"></div>
+
+    <!-- Scanning line -->
+    <div class="landing-scan-line"></div>
+
+    <!-- Neon floating orbs -->
+    <div class="neon-orb orb-1"></div>
+    <div class="neon-orb orb-2"></div>
+    <div class="neon-orb orb-3"></div>
+    <div class="neon-orb orb-4"></div>
+    <div class="neon-orb orb-5"></div>
+    <div class="neon-orb orb-6"></div>
+
+    <!-- Floating CSS diamond shapes -->
+    <div class="css-diamond dmd-1"></div>
+    <div class="css-diamond dmd-2"></div>
+    <div class="css-diamond dmd-3"></div>
+    <div class="css-diamond dmd-4"></div>
+    <div class="css-diamond dmd-5"></div>
+
+    <!-- LEFT SIDE PANEL -->
+    <div class="landing-side-panel side-left">
+      <div class="side-vert-label">// SMART KITCHEN SYSTEM</div>
+      <div class="side-stat-group">
+        <div class="side-stat">
+          <div class="side-stat-icon">❄</div>
+          <div>
+            <div class="side-stat-val">4°C</div>
+            <div class="side-stat-lbl">FRIDGE TEMP</div>
+          </div>
+        </div>
+        <div class="side-stat">
+          <div class="side-stat-icon">🧊</div>
+          <div>
+            <div class="side-stat-val">−18°C</div>
+            <div class="side-stat-lbl">FREEZER TEMP</div>
+          </div>
+        </div>
+        <div class="side-stat">
+          <div class="side-stat-icon">◎</div>
+          <div>
+            <div class="side-stat-val side-online">● ONLINE</div>
+            <div class="side-stat-lbl">SYSTEM STATUS</div>
+          </div>
+        </div>
+      </div>
+      <div class="side-bar-group">
+        <div class="side-bar-row"><span>CAPACITY</span><div class="side-bar"><div class="side-bar-fill" style="width:72%"></div></div><span>72%</span></div>
+        <div class="side-bar-row"><span>FRESHNESS</span><div class="side-bar"><div class="side-bar-fill" style="width:88%; background: var(--success)"></div></div><span>88%</span></div>
+      </div>
+      <div class="side-code-block">
+        <div>UNIT_ID: FM-2026</div>
+        <div>BUILD: v2.0.1</div>
+        <div>UPTIME: 99.9%</div>
+      </div>
+    </div>
+
+    <!-- RIGHT SIDE PANEL -->
+    <div class="landing-side-panel side-right">
+      <div class="side-vert-label">// AI POWERED FEATURES</div>
+      <div class="side-feature-list">
+        <div class="side-feature"><span class="sf-icon">◈</span><span>Inventory Tracking</span></div>
+        <div class="side-feature"><span class="sf-icon">◆</span><span>Expiry Alerts</span></div>
+        <div class="side-feature"><span class="sf-icon">◉</span><span>Recipe Suggestions</span></div>
+        <div class="side-feature"><span class="sf-icon">▣</span><span>Nutrition Logger</span></div>
+        <div class="side-feature"><span class="sf-icon">◐</span><span>AI Vision Scan</span></div>
+        <div class="side-feature"><span class="sf-icon">⬡</span><span>Telegram Alerts</span></div>
+      </div>
+      <div class="side-hex-grid">
+        <div class="hex h1"></div><div class="hex h2"></div><div class="hex h3"></div>
+        <div class="hex h4"></div><div class="hex h5"></div><div class="hex h6"></div>
+      </div>
+      <div class="side-code-block">
+        <div>SCAN: ACTIVE</div>
+        <div>ALERTS: ENABLED</div>
+        <div>SYNC: REAL-TIME</div>
+      </div>
+    </div>
+
+    <!-- Centre elements (unchanged) -->
+    <div class="landing-title">FRIDGE MANAGER</div>
+    <div class="landing-canvas-wrap">
+      <canvas id="hero-3d-canvas"></canvas>
+    </div>
+    <div class="landing-hint" id="landing-hint">
+      <span class="hint-pulse">●</span> TAP THE FRIDGE TO OPEN
+    </div>
+    <div class="landing-opening-msg" id="landing-opening-msg">OPENING...</div>
+  </div>
+
+  <!-- ═══ APP SHELL (hidden until fridge opens) ═══════════════════ -->
+  <div id="app-shell" class="app-shell" style="display:none">
+
+    <!-- Vaporwave BG -->
+    <div class="vapor-bg-wrapper">
+      <div class="vapor-grid"></div>
+      <div class="vapor-scanlines"></div>
+      <div class="vapor-noise"></div>
+      <div class="vapor-dither"></div>
+      <img src="/static/img/vapor_bust.png" class="vapor-bust" alt="">
+    </div>
+
+    <!-- HEADER -->
+    <header class="app-header">
+      <div class="app-logo" id="game-trigger">
+        <svg class="hold-ring" viewBox="0 0 50 50" width="50" height="50">
+          <circle cx="25" cy="25" r="22" fill="none" stroke="rgba(0,242,255,0.15)" stroke-width="3"/>
+          <circle id="hold-progress-ring" cx="25" cy="25" r="22" fill="none"
+                  stroke="#00f2ff" stroke-width="3" stroke-linecap="round"
+                  transform="rotate(-90 25 25)"
+                  style="opacity:0;stroke-dasharray:138.2;stroke-dashoffset:138.2;
+                         filter:drop-shadow(0 0 6px #00f2ff);transition:stroke-dashoffset 0.05s linear;"/>
+        </svg>
+        <div>
+          <h1>Fridge Manager</h1>
+          <div class="subtitle">Smart Kitchen Dashboard</div>
+        </div>
+      </div>
+      <div class="header-actions">
+        <span id="header-time" class="header-time"></span>
+      </div>
+    </header>
+
+    <!-- TAB NAV -->
+    <nav class="tab-nav">
+      <button class="tab-btn active" data-tab="dashboard"><span class="tab-text">Dashboard</span></button>
+      <button class="tab-btn" data-tab="inventory"><span class="tab-text">Inventory</span></button>
+      <button class="tab-btn" data-tab="restock">
+        <span class="tab-text">Restocking</span>
+        <span class="badge" id="badge-restock" style="display:none">0</span>
+      </button>
+      <button class="tab-btn" data-tab="expiry">
+        <span class="tab-text">Expiry</span>
+        <span class="badge" id="badge-expiring" style="display:none">0</span>
+      </button>
+      <button class="tab-btn" data-tab="recipes"><span class="tab-text">Recipes</span></button>
+      <button class="tab-btn" data-tab="nutrition"><span class="tab-text">Nutrition</span></button>
+      <button class="tab-btn" data-tab="scan"><span class="tab-text">Scan</span></button>
+      <button class="tab-btn" data-tab="telegram"><span class="tab-text">Telegram</span></button>
+    </nav>
+
+    <!-- MAIN CONTENT -->
+    <main>
+
+      <!-- DASHBOARD -->
+      <section id="tab-dashboard" class="tab-panel active tab-content">
+        <div class="section-header">
+          <div>
+            <h2 class="section-title">Dashboard</h2>
+            <div class="section-subtitle">Your kitchen at a glance</div>
+          </div>
+        </div>
+        <div class="stats-grid">
+          <div class="stat-card teal"><div class="stat-value" id="stat-total">—</div><div class="stat-label">Total Items</div></div>
+          <div class="stat-card red"><div class="stat-value" id="stat-expiring">—</div><div class="stat-label">Expiring Soon</div></div>
+          <div class="stat-card yellow"><div class="stat-value" id="stat-lowstock">—</div><div class="stat-label">Low Stock</div></div>
+          <div class="stat-card blue"><div class="stat-value" id="stat-recipes">—</div><div class="stat-label">Recipes</div></div>
+          <div class="stat-card orange"><div class="stat-value" id="stat-calories">—</div><div class="stat-label">Today's Calories</div></div>
+          <div class="stat-card purple"><div class="stat-value" id="stat-protein">—</div><div class="stat-label">Today's Protein</div></div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+          <div class="card">
+            <h3 style="font-size:1rem;margin-bottom:12px;">Expiring Soon</h3>
+            <div id="dash-expiring-list"><div style="text-align:center;padding:20px;color:var(--text-muted);"><span class="spinner"></span></div></div>
+          </div>
+          <div class="card">
+            <h3 style="font-size:1rem;margin-bottom:12px;">Needs Restocking</h3>
+            <div id="dash-restock-list"><div style="text-align:center;padding:20px;color:var(--text-muted);"><span class="spinner"></span></div></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- INVENTORY -->
+      <section id="tab-inventory" class="tab-panel tab-content">
+        <div class="section-header">
+          <div><h2 class="section-title">Inventory</h2><div class="section-subtitle">All items in your fridge &amp; freezer</div></div>
+          <div style="display:flex;gap:10px;">
+            <button class="btn btn-secondary" onclick="loadInventory()">Refresh</button>
+            <button class="btn btn-primary" onclick="openModal('modal-add-item')">Add Item</button>
+          </div>
+        </div>
+        <div class="table-wrapper">
+          <table class="data-table" id="inventory-table">
+            <thead><tr><th>Name</th><th style="text-align:center">Qty</th><th>Storage</th><th>Expiry Date</th><th>Days Left</th><th style="text-align:center;width:60px">⋯</th></tr></thead>
+            <tbody id="inventory-body"><tr><td colspan="6" style="text-align:center;padding:32px;color:var(--text-muted);"><span class="spinner"></span></td></tr></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- RESTOCK -->
+      <section id="tab-restock" class="tab-panel tab-content">
+        <div class="section-header">
+          <div><h2 class="section-title">Needs Restocking</h2><div class="section-subtitle">Items running low</div></div>
+          <div class="toolbar" style="margin-bottom:0">
+            <div class="threshold-control"><label>Threshold:</label><input type="number" id="restock-threshold" value="2" min="1" max="100" onchange="loadRestock()"></div>
+            <button class="btn btn-secondary" onclick="loadRestock()">↻ Refresh</button>
+          </div>
+        </div>
+        <div class="table-wrapper">
+          <table class="data-table">
+            <thead><tr><th>Name</th><th style="text-align:center">Current Qty</th><th>Storage</th><th style="text-align:center">Action</th></tr></thead>
+            <tbody id="restock-body"><tr><td colspan="4" style="text-align:center;padding:32px;color:var(--text-muted);"><span class="spinner"></span></td></tr></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- EXPIRY -->
+      <section id="tab-expiry" class="tab-panel tab-content">
+        <div class="section-header">
+          <div><h2 class="section-title">Expiry Reminders</h2><div class="section-subtitle">Items expiring within your threshold</div></div>
+          <div class="toolbar" style="margin-bottom:0">
+            <div class="threshold-control"><label>Within days:</label><input type="number" id="expiry-days" value="3" min="0" max="365" onchange="loadExpiry()"></div>
+            <button class="btn btn-secondary" onclick="loadExpiry()">↻ Refresh</button>
+          </div>
+        </div>
+        <div class="table-wrapper">
+          <table class="data-table">
+            <thead><tr><th>Name</th><th>Storage</th><th>Expiry Date</th><th>Days Left</th></tr></thead>
+            <tbody id="expiry-body"><tr><td colspan="4" style="text-align:center;padding:32px;color:var(--text-muted);"><span class="spinner"></span></td></tr></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- RECIPES -->
+      <section id="tab-recipes" class="tab-panel tab-content">
+        <div class="section-header">
+          <div><h2 class="section-title">Recipe Suggestions</h2><div class="section-subtitle">Recipes you can cook with what you have</div></div>
+          <div style="display:flex;gap:10px;align-items:center;">
+            <select class="form-select" id="recipe-filter" onchange="loadRecipes()" style="width:120px;">
+              <option value="Both">Both</option><option value="Fridge">Fridge</option><option value="Freezer">Freezer</option>
+            </select>
+            <button class="btn btn-secondary" onclick="loadRecipes()">↻ Refresh</button>
+            <button class="btn btn-primary" onclick="openModal('modal-add-recipe')">+ Add Recipe</button>
+          </div>
+        </div>
+        <div id="recipe-grid" class="recipe-grid"><div style="text-align:center;padding:40px;color:var(--text-muted);grid-column:1/-1;"><span class="spinner"></span></div></div>
+      </section>
+
+      <!-- NUTRITION -->
+      <section id="tab-nutrition" class="tab-panel tab-content">
+        <div class="section-header">
+          <div><h2 class="section-title">Nutrition Tracker</h2><div class="section-subtitle">Track your daily meals and calories</div></div>
+          <div style="display:flex;gap:10px;align-items:center;">
+            <input type="date" class="form-input" id="nutrition-date" style="width:160px;" onchange="loadNutrition()">
+            <button class="btn btn-secondary" onclick="loadNutrition()">↻ Refresh</button>
+            <button class="btn btn-primary" onclick="openMealModal()">+ Log Meal</button>
+          </div>
+        </div>
+        <div class="card" style="margin-bottom:20px;">
+          <h3 style="font-size:0.85rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:12px;">Today's Summary</h3>
+          <div class="summary-row">
+            <div class="summary-item calories"><div class="summary-value" id="nut-total-cal">0</div><div class="summary-label">Calories</div></div>
+            <div class="summary-item protein"><div class="summary-value" id="nut-total-protein">0g</div><div class="summary-label">Protein</div></div>
+            <div class="summary-item meals"><div class="summary-value" id="nut-total-meals">0</div><div class="summary-label">Meals</div></div>
+          </div>
+        </div>
+        <div class="nutrition-grid">
+          <div class="card"><h3 style="font-size:0.95rem;margin-bottom:12px;">Meals</h3><div id="meals-list"><div class="empty-state"><div class="empty-text">No meals logged yet</div></div></div></div>
+          <div class="card"><h3 style="font-size:0.95rem;margin-bottom:12px;">7-Day Calorie History</h3><div id="nutrition-bars" class="history-bars"><div style="text-align:center;width:100%;padding:30px;color:var(--text-muted);"><span class="spinner"></span></div></div></div>
+        </div>
+      </section>
+
+      <!-- SCAN -->
+      <section id="tab-scan" class="tab-panel tab-content">
+        <div class="section-header"><div><h2 class="section-title">AI Vision Scan</h2><div class="section-subtitle">Use your camera to detect items automatically</div></div></div>
+        <div class="scan-container">
+          <div class="card scan-card">
+            <div class="video-wrapper">
+              <video id="scan-video" autoplay playsinline></video>
+              <canvas id="scan-canvas" style="display:none"></canvas>
+              <div id="scan-overlay" class="scan-overlay"><div class="scan-line"></div></div>
+            </div>
+            <div class="scan-actions">
+              <button class="btn btn-primary btn-lg" id="btn-capture" onclick="captureAndScan()">Capture &amp; Analyze</button>
+              <button class="btn btn-secondary" onclick="startCamera()">Reset Camera</button>
+            </div>
+          </div>
+          <div class="card" id="scan-results-card" style="display:none">
+            <h3 style="margin-bottom:16px;">Detected Items</h3>
+            <div id="scan-results-list" class="detected-items-list"></div>
+            <div class="modal-actions" style="margin-top:20px;"><button class="btn btn-primary" onclick="addDetectedItems()">Add Selected to Inventory</button></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TELEGRAM -->
+      <section id="tab-telegram" class="tab-panel tab-content">
+        <div class="section-header"><div><h2 class="section-title">Telegram Integration</h2><div class="section-subtitle">Send notifications and lists to your phone</div></div></div>
+        <div class="telegram-grid">
+          <div class="card">
+            <h3 style="margin-bottom:20px;">Quick Actions</h3>
+            <div class="quick-actions-grid">
+              <button class="btn btn-secondary action-card" onclick="sendTelegram('restock')"><span class="action-label">Send Restock List</span></button>
+              <button class="btn btn-secondary action-card" onclick="sendTelegram('expiry')"><span class="action-label">Send Expiry List</span></button>
+            </div>
+          </div>
+          <div class="card">
+            <h3 style="margin-bottom:20px;">Custom Message</h3>
+            <div class="form-group"><textarea class="form-textarea" id="tg-custom-msg" placeholder="Type a message..." style="min-height:120px;"></textarea></div>
+            <button class="btn btn-primary" style="width:100%;justify-content:center;" onclick="sendTelegram('custom')">Send Message</button>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- MODALS -->
+    <div id="modal-add-item" class="modal-overlay">
+      <div class="modal">
+        <div class="modal-header"><h3 class="modal-title">Add New Item</h3><button class="modal-close" onclick="closeModal('modal-add-item')">✕</button></div>
+        <div class="form-group"><label class="form-label">Item Name</label><input type="text" class="form-input" id="add-name" placeholder="e.g. Milk, Eggs, Butter…"></div>
+        <div class="form-row">
+          <div class="form-group"><label class="form-label">Quantity</label><input type="number" class="form-input" id="add-qty" placeholder="1" min="1" value="1"></div>
+          <div class="form-group"><label class="form-label">Storage</label><select class="form-select" id="add-storage"><option value="Fridge">Fridge</option><option value="Freezer">Freezer</option></select></div>
+        </div>
+        <div class="form-group"><label class="form-label">Expiry Date (optional)</label><input type="date" class="form-input" id="add-expiry"></div>
+        <div class="modal-actions"><button class="btn btn-secondary" onclick="closeModal('modal-add-item')">Cancel</button><button class="btn btn-primary" onclick="addInventoryItem()">Add Item</button></div>
+      </div>
+    </div>
+
+    <div id="modal-add-recipe" class="modal-overlay">
+      <div class="modal">
+        <div class="modal-header"><h3 class="modal-title">Add New Recipe</h3><button class="modal-close" onclick="closeModal('modal-add-recipe')">✕</button></div>
+        <div class="form-group"><label class="form-label">Dish Name</label><input type="text" class="form-input" id="recipe-dish" placeholder="e.g. Tomato Omelette"></div>
+        <div class="form-group"><label class="form-label">Ingredients (comma-separated)</label><input type="text" class="form-input" id="recipe-ingredients" placeholder="e.g. eggs, tomato, butter"></div>
+        <div class="modal-actions"><button class="btn btn-secondary" onclick="closeModal('modal-add-recipe')">Cancel</button><button class="btn btn-primary" onclick="addRecipe()">Add Recipe</button></div>
+      </div>
+    </div>
+
+    <div id="modal-add-meal" class="modal-overlay">
+      <div class="modal">
+        <div class="modal-header"><h3 class="modal-title">Log a Meal</h3><button class="modal-close" onclick="closeModal('modal-add-meal')">✕</button></div>
+        <div class="form-row">
+          <div class="form-group"><label class="form-label">Date</label><input type="date" class="form-input" id="meal-log-date"></div>
+          <div class="form-group"><label class="form-label">Meal</label><select class="form-select" id="meal-label"><option value="Breakfast">Breakfast</option><option value="Lunch" selected>Lunch</option><option value="Dinner">Dinner</option><option value="Snack">Snack</option><option value="Other">Other</option></select></div>
+        </div>
+        <div class="form-group"><label class="form-label">What you ate</label><textarea class="form-textarea" id="meal-description" placeholder="e.g. 2 rotis, dal tadka, rice, salad"></textarea></div>
+        <div class="modal-actions"><button class="btn btn-secondary" onclick="closeModal('modal-add-meal')">Cancel</button><button class="btn btn-primary" onclick="addMealLog()">Log Meal</button></div>
+      </div>
+    </div>
+
+    <!-- GAME OVERLAY -->
+    <div id="game-overlay" class="game-overlay" style="display:none">
+      <canvas id="splash-canvas" class="splash-canvas" style="display:none"></canvas>
+      <div id="car-game-screen" class="car-game-screen" style="display:none">
+        <div class="car-game-hud">
+          <div class="car-hud-left"><span class="hud-label">SCORE</span><span class="hud-value" id="car-score">0</span></div>
+          <div class="car-hud-center">← → ARROWS / SWIPE</div>
+          <button class="car-exit-btn" onclick="exitCarGame()">✕ EXIT</button>
+        </div>
+        <canvas id="car-canvas" class="car-canvas"></canvas>
+      </div>
+      <div id="death-screen" class="death-screen" style="display:none">
+        <div class="death-scanlines"></div>
+        <div class="death-content">
+          <div class="death-skull">☠</div>
+          <div class="death-title">YOU HAVE DIED OF</div>
+          <div id="death-illness" class="death-illness">FOOD POISONING</div>
+          <div class="death-caused">Caused by contaminated food from your fridge</div>
+          <div class="death-score">FINAL SCORE: <span id="death-score-val">0</span></div>
+          <div class="death-actions">
+            <button class="btn btn-primary death-btn" onclick="continueGame()">▶ CONTINUE</button>
+            <button class="btn btn-secondary death-btn" onclick="exitCarGame()">⬅ GO BACK</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- end app-shell -->
+
+  <script src="/static/js/app.js"></script>
+  <script src="/static/js/game.js"></script>
+  <script>
+    const today = new Date().toISOString().slice(0,10);
+    function openMealModal() {
+      const d = document.getElementById('meal-log-date');
+      if (d) d.value = document.getElementById('nutrition-date')?.value || today;
+      openModal('modal-add-meal');
+    }
+    document.addEventListener('DOMContentLoaded', () => {
+      const nutDate = document.getElementById('nutrition-date');
+      if (nutDate) nutDate.value = today;
+    });
+  </script>
+</body>
+</html>
