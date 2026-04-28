@@ -3,7 +3,7 @@ pandas
 numpy
 pillow
 requests
-opencv-python
+opencv-python-headless
 apscheduler
 flask
 python-dotenv
