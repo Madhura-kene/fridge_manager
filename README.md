@@ -152,6 +152,3 @@ fridge_manager/
 
 ---
 
-## 📜 License
-
-MIT — feel free to fork, remix, and build on it.
