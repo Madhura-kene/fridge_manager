@@ -1,34 +1,34 @@
-# 🧊 Fridge Manager (Web + Desktop)
+#  Fridge Manager (Web + Desktop)
 
 > **A smart, AI-powered multi-platform fridge management system.** This project has evolved from a Python desktop application into a high-end, Vaporwave-themed web dashboard with AI Vision scanning and Telegram alerts.
 
 ---
 
-## ⚡ Multi-Platform Support
+##  Multi-Platform Support
 
 | Version | Status | Tech Stack |
 |---|---|---|
-| 🌐 **Web Dashboard** | **Latest** | Flask, Vanilla JS, CSS (Vaporwave/Glassmorphism) |
-| 💻 **Legacy Desktop** | **Legacy** | Python (Tkinter) |
+| **Web Dashboard** | **Latest** | Flask, Vanilla JS, CSS (Vaporwave/Glassmorphism) |
+| **Legacy Desktop** | **Legacy** | Python (Tkinter) |
 
 ---
 
-## ✨ Features
+##  Features
 
 | Feature | Description |
 |---|---|
-| 📦 **Inventory** | Track items with quantity, storage location (Fridge/Freezer), and expiry dates |
-| 🛒 **Restock Alerts** | Auto-detect low-stock items below a configurable threshold |
-| ⏰ **Expiry Monitor** | Get warnings for items expiring within a set number of days |
-| 🍳 **Recipe Suggestions** | AI-matched recipes based on available ingredients |
-| 🥗 **Nutrition Logger** | Log meals with calories & protein, view daily/weekly summaries |
-| 📸 **Camera Scan** | Point your webcam at fridge contents — LLaVA AI detects food items automatically |
-| 📲 **Telegram Bot** | Send restock / expiry reports and evening meal reminders to Telegram |
-| 🎮 **Easter Egg** | Hold the logo for 3 seconds to unlock a hidden car-racing mini-game |
+|  **Inventory** | Track items with quantity, storage location (Fridge/Freezer), and expiry dates |
+|  **Restock Alerts** | Auto-detect low-stock items below a configurable threshold |
+|  **Expiry Monitor** | Get warnings for items expiring within a set number of days |
+|  **Recipe Suggestions** | AI-matched recipes based on available ingredients |
+|  **Nutrition Logger** | Log meals with calories & protein, view daily/weekly summaries |
+|  **Camera Scan** | Point your webcam at fridge contents — LLaVA AI detects food items automatically |
+|  **Telegram Bot** | Send restock / expiry reports and evening meal reminders to Telegram |
+|  **Easter Egg** | Hold the logo for 3 seconds to unlock a hidden car-racing mini-game |
 
 ---
 
-## 🚀 Quick Start
+##  Quick Start
 
 ### 1. Clone the repository
 ```bash
@@ -67,7 +67,7 @@ Open **http://localhost:5000** in your browser.
 
 ---
 
-## ⚙️ Configuration
+##  Configuration
 
 All secrets and runtime settings live in a `.env` file (**never committed**). Copy `.env.example` → `.env` and fill in:
 
@@ -86,7 +86,7 @@ All secrets and runtime settings live in a `.env` file (**never committed**). Co
 
 ---
 
-## 📸 Camera Scanning (Ollama + LLaVA)
+##  Camera Scanning (Ollama + LLaVA)
 
 1. [Install Ollama](https://ollama.com/download)
 2. Pull the vision model:
@@ -101,7 +101,7 @@ All secrets and runtime settings live in a `.env` file (**never committed**). Co
 
 ---
 
-## 📲 Telegram Bot Setup
+##  Telegram Bot Setup
 
 1. Message [@BotFather](https://t.me/BotFather) on Telegram → `/newbot`
 2. Copy the token → paste into `TELEGRAM_TOKEN` in `.env`
@@ -113,7 +113,7 @@ All secrets and runtime settings live in a `.env` file (**never committed**). Co
 
 ---
 
-## 🗂️ Project Structure
+##  Project Structure
 
 ```
 fridge_manager/
@@ -142,7 +142,7 @@ fridge_manager/
 
 ---
 
-## 🛠️ Tech Stack
+##  Tech Stack
 
 - **Backend**: Python, Flask, SQLAlchemy (SQLite)
 - **Frontend**: Vanilla JS, CSS (Glassmorphism / Vaporwave)
